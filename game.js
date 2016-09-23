@@ -25,6 +25,29 @@ var Key = {
 window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 
+class Apple
+{
+	constructor(x,y,size)
+	{
+		this.posX = x;
+		this.posY = y;
+		this.size = size;
+	}
+	Draw()
+	{
+			ctx.strokeStyle = "#000000";
+			ctx.strokeRect(this.posX*10,this.posY*10,this.size,this.size+1);
+			ctx.fillStyle="#FF0000";
+			ctx.fillRect(this.posX*10,this.posY*10,this.size,this.size);
+	}
+	ChangePosition(x,y)
+	{
+		this.posX = x;
+		this.posY = y;
+	}
+
+}
+
 class Cell
 {
 	constructor(lifeValue,x,y,size)
@@ -143,7 +166,7 @@ class Snake
 	{
 		this.actualXDirection = x;
 		this.actualYDirection = y;
-		this.lenght = 20;
+		this.lenght = 2;
 	}
 	changeDirection(x,y)
 	{
@@ -157,7 +180,7 @@ var snake = new Snake(1,0);
 
 class Game
 {
-	constructor(mapX,mapY,snake)
+	constructor(mapX,mapY,snake,apple)
 	{
 		this.cellArray = new Array(mapX);
 		for(var i=0;i<mapX;i++)
@@ -175,6 +198,7 @@ class Game
 		this.mapX = mapX;
 		this.mapY = mapY;
 		this.snake = snake;
+		this.apple = apple;
 			
 	}
 	Loop()
@@ -191,6 +215,13 @@ class Game
 		if(this.actualSnakeXPosition<0) this.actualSnakeXPosition = this.mapX-1;
 		if(this.actualSnakeYPosition<0) this.actualSnakeYPosition = this.mapX-1;
 
+		if(this.apple.posX == this.actualSnakeXPosition && this.apple.posY == this.actualSnakeYPosition)
+		{
+			
+			this.snake.lenght++;
+			apple.ChangePosition(Math.floor((Math.random() * this.mapX) + 1),Math.floor((Math.random() * this.mapY) + 1));
+		}
+
 		this.cellArray[this.actualSnakeXPosition][this.actualSnakeYPosition].SetLife(this.snake.lenght);
 
 		for(var y=0;y<this.mapY;y++)
@@ -201,8 +232,14 @@ class Game
 				this.cellArray[x][y].Draw();
 			}
 		}
+
+		this.apple.Draw();
+
 	}
 }
 
-var game = new Game(100,100,snake);
+var apple = new Apple(10,10,8);
+var game = new Game(100,100,snake,apple);
+
+
 setInterval(function(){ game.Loop(); },100);
