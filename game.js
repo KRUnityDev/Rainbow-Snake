@@ -186,8 +186,11 @@ class Game
 
   		this.actualSnakeXPosition += this.snake.actualXDirection;
 		this.actualSnakeYPosition += this.snake.actualYDirection;
-		console.log(this.actualSnakeXPosition + "x");
-		console.log(this.actualSnakeYPosition + "y");
+		if(this.actualSnakeXPosition>=this.mapX) this.actualSnakeXPosition = 0;
+		if(this.actualSnakeYPosition>=this.mapY) this.actualSnakeYPosition = 0;
+		if(this.actualSnakeXPosition<0) this.actualSnakeXPosition = this.mapX-1;
+		if(this.actualSnakeYPosition<0) this.actualSnakeYPosition = this.mapX-1;
+
 		this.cellArray[this.actualSnakeXPosition][this.actualSnakeYPosition].SetLife(this.snake.lenght);
 
 		for(var y=0;y<this.mapY;y++)
