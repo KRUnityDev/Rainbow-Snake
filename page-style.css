@@ -2,4 +2,13 @@ body
 {
 	margin: 0 auto;
 	padding: 0;
+	background-color: #888888;
+}
+#myCanvas
+{
+	padding: 10px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 10px 10px 5px #444444;
 }

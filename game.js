@@ -64,7 +64,7 @@ class Cell
 	}
 	SetLife(value)
 	{
-		this.life = value;
+		this.life += value;
 		this.color = (this.randomColor()+this.randomColor()+this.randomColor());
 	}
 	Draw()
@@ -81,7 +81,7 @@ class Cell
 		}
 		else
 		{
-			ctx.strokeStyle = "#000000";
+			ctx.strokeStyle = "#888888";
 			ctx.strokeRect(this.posX,this.posY,this.size,this.size+1);
 			ctx.fillStyle="#CCCCCC";
 			ctx.fillRect(this.posX,this.posY,this.size,this.size);
@@ -218,11 +218,12 @@ class Game
 		if(this.apple.posX == this.actualSnakeXPosition && this.apple.posY == this.actualSnakeYPosition)
 		{
 			
-			this.snake.lenght++;
+			this.snake.lenght += 5;
 			apple.ChangePosition(Math.floor((Math.random() * this.mapX) + 1),Math.floor((Math.random() * this.mapY) + 1));
 		}
 
 		this.cellArray[this.actualSnakeXPosition][this.actualSnakeYPosition].SetLife(this.snake.lenght);
+		if(this.cellArray[this.actualSnakeXPosition][this.actualSnakeYPosition].life>this.snake.lenght) EndGame();
 
 		for(var y=0;y<this.mapY;y++)
 		{
@@ -235,6 +236,19 @@ class Game
 
 		this.apple.Draw();
 
+	}
+}
+
+function EndGame()
+{
+	var decision = confirm("Niestety, przegrałeś :C \nCzy chcesz spróbować jeszcze raz?");
+	if (decision == true) {
+    alert("Tak więc zacznijmy od początku!");
+    window.location.reload(false); 
+	} 
+	else {
+    alert("Tak więc znikaj!");
+    open(window.location.href + "sad.html","_self");
 	}
 }
 
