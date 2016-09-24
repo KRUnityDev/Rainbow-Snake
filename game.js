@@ -156,7 +156,7 @@ class Game
 		{
 			
 			this.snake.lenght += 5;
-			apple.ChangePosition(Math.floor((Math.random() * this.mapX) + 1),Math.floor((Math.random() * this.mapY) + 1));
+			apple.ChangePosition(Math.floor((Math.random() * (this.mapX-1)) + 1),Math.floor((Math.random() * (this.mapY-1)) + 1));
 		}
 
 		this.cellArray[this.actualSnakeXPosition][this.actualSnakeYPosition].SetLife(this.snake.lenght);
