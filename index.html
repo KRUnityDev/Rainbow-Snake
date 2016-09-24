@@ -3,10 +3,26 @@
 <head>
 	<title>Rainbow Snake</title>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="stylesheet" type="text/css" href="page-style.css">
+
 	
 </head>
 <body>
+
+<div class="popup" id="popup">
+		<h2>Przegrałeś! :C</h2>
+		<div class="content">
+			<div>Chcesz spróbować jeszcze raz?</div>
+			<div style="padding:10px; display:inline-block;">
+				<button class="button1" onclick="ResetGame()">Chce!</button>
+				<button class="button2" onclick="CloseGame()">Nie chce!</button>
+			</div>
+		</div>
+
+</div>
+
 <canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #222222;">
 <script src="game.js"></script>
 

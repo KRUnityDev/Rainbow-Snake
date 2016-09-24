@@ -1,6 +1,9 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
+var popup = document.getElementById("popup");
+popup.style.visibility = 'hidden';
+
 var Key = {
   _pressed: {},
 
@@ -90,74 +93,8 @@ class Cell
 		
 	}
 	randomColor()
-	{
-		var v = Math.floor((Math.random() * 16) + 1);
-		switch(v)
-		{
-			case 1:
-			return "00";
-			break;
-
-			case 2:
-			return "11";
-			break;
-
-			case 3:
-			return "22";
-			break;
-
-			case 4:
-			return "33";
-			break;
-
-			case 5:
-			return "44";
-			break;
-
-			case 6:
-			return "55";
-			break;
-
-			case 7:
-			return "66";
-			break;
-
-			case 8:
-			return "77";
-			break;
-
-			case 9:
-			return "88";
-			break;
-
-			case 10:
-			return "99";
-			break;
-
-			case 11:
-			return "AA";
-			break;
-
-			case 12:
-			return "BB";
-			break;
-
-			case 13:
-			return "CC";
-			break;
-
-			case 14:
-			return "DD";
-			break;
-
-			case 15:
-			return "EE";
-			break;
-
-			case 16:
-			return "FF";
-			break;
-		}
+	{ 
+		return Math.floor(Math.random() * 16).toString(16).toUpperCase().repeat(2);
 	}
 }
 class Snake
@@ -203,10 +140,10 @@ class Game
 	}
 	Loop()
 	{
-		if (Key.isDown(Key.UP)) this.snake.changeDirection(0,-1);
- 		if (Key.isDown(Key.LEFT)) this.snake.changeDirection(-1,0);
-  		if (Key.isDown(Key.DOWN)) this.snake.changeDirection(0,1);
-  		if (Key.isDown(Key.RIGHT)) this.snake.changeDirection(1,0);
+		if (Key.isDown(Key.UP) && this.snake.actualYDirection != 1) this.snake.changeDirection(0,-1);
+ 		if (Key.isDown(Key.LEFT) && this.snake.actualXDirection != 1) this.snake.changeDirection(-1,0);
+  		if (Key.isDown(Key.DOWN) && this.snake.actualYDirection != -1) this.snake.changeDirection(0,1);
+  		if (Key.isDown(Key.RIGHT) && this.snake.actualXDirection != -1) this.snake.changeDirection(1,0);
 
   		this.actualSnakeXPosition += this.snake.actualXDirection;
 		this.actualSnakeYPosition += this.snake.actualYDirection;
@@ -241,19 +178,20 @@ class Game
 
 function EndGame()
 {
-	var decision = confirm("Niestety, przegrałeś :C \nCzy chcesz spróbować jeszcze raz?");
-	if (decision == true) {
-    alert("Tak więc zacznijmy od początku!");
-    window.location.reload(false); 
-	} 
-	else {
-    alert("Tak więc znikaj!");
-    open(window.location.href + "sad.html","_self");
-	}
+	clearInterval(intervalID);
+	popup.style.visibility = 'visible';
+}
+function ResetGame()
+{
+	window.location.reload(false); 
+}
+function CloseGame()
+{
+	open(window.location.href + "sad.html","_self");
 }
 
 var apple = new Apple(10,10,8);
 var game = new Game(100,100,snake,apple);
 
 
-setInterval(function(){ game.Loop(); },100);
+var intervalID = setInterval(function(){ game.Loop(); },100);
